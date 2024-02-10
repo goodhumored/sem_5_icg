@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <title> Lab2 X3DOM </title>
+  <script src="https://www.x3dom.org/download/dev/x3dom-full.js"></script>
+  <link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'>
+  <style>
+    x3d {
+      border: 3px solid #050505;
+      background-image: url('background.jpg');
+    }
+
+    body {
+      font-size: 100%;
+      font-family: verdana, sans-serif;
+      background-color: antiquewhite;
+      color: black;
+    }
+
+    h1 {
+      color: darkblue;
+    }
+  </style>
+</head>
+
+<body>
+  <h1> Некрасов К.С. ЛP1 4142 </h1>
+  <p>
+    Это html-страница c 3d-объектами.
+  </p>
+  <x3d width='800px' height='600px'>
+    <scene>
+      <ScalarInterpolator DEF='SCALAR_INTERPOLATOR' key='0 0.25 0.5 0.75 1' keyValue='0.25 0.75 1 0.75 0.25'>
+      </ScalarInterpolator>
+      <ColorInterpolator DEF='COLOR_INTERPOLATOR' key='0 0.25 0.5 0.75 1' keyValue='0 1 0  1 1 0  1 0 0  1 0 1  0 0 1'>
+      </ColorInterpolator>
+      <DirectionalLight id="directional" direction='0 -1 -1' on="TRUE" intensity='0.4' shadowIntensity='0.5'>
+      </DirectionalLight>
+
+      <!-- ----------------------------------------------------------------------- -->
+      <!--                                Viewpoints                               -->
+      <!-- ----------------------------------------------------------------------- -->
+      <!-- ------------------------------- general ------------------------------- -->
+      <Viewpoint id="general" position="-14.09116 8.14736 20.40598" orientation="-0.36749 -0.86839 -0.33295 0.71583"
+        zNear="0.00739" zFar="73.93107" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540"
+        description="defaultX3DViewpointNode">
+      </Viewpoint>
+      <!-- -------------------------------- down --------------------------------- -->
+      <Viewpoint id="down" position="-8.09880 1.06916 0.98377" orientation="0.29863 -0.94897 -0.10140 1.46024"
+        zNear="0.00739" zFar="73.93107" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540"
+        description="defaultX3DViewpointNode">
+      </Viewpoint>
+      <!-- ----------------------------------------------------------------------- -->
+      <!--                               /Viewpoints                               -->
+      <!-- ----------------------------------------------------------------------- -->
+
+      <!-- --------------------------- Navigation info --------------------------- -->
+      <NavigationInfo avatarSize='[ 0.25, 1.6, 0.75 ]' bind='true' description='""' explorationMode='' all''
+        headlight='true' isActive='false' metadata='X3DMetadataObject' reverseScroll='false' speed='1.0'
+        transitionTime='1.0' transitionType='["LINEAR"]' type='["EXAMINE","ANY"]' typeParams='[-0.4,60,0.05,2.8]'
+        visibilityLimit='0.0' walkDamping='2.0'></NavigationInfo>
+      <!-- --------------------------- /NavigationInfo --------------------------- -->
+
+      <!--table-->
+      <transform rotation='1,0,0, -1.5'>
+        <shape>
+          <appearance>
+            <Texture DEF='sand_texture' url="sand.jpg"></Texture>
+            <material DEF='sand_color' diffuseColor='1 0.643 0.1'></material>
+            <material diffuseColor='0 1 0'></material>
+          </appearance>
+          <plane size='50 50'></plane>
+        </shape>
+      </transform>
+
+      <!--moon-->
+      <transform DEF="MOON" translation="15 15 -5">
+        <SphereSensor DEF='SPHERE_SENSOR' description='click and drag to rotate'> </SphereSensor>
+        <shape>
+          <appearance>
+            <imagetexture DEF='steel_texture' url="steel.jpg"></imagetexture>
+          </appearance>
+          <sphere radius="4"></sphere>
+        </shape>
+      </transform>
+
+      <Group DEF="clouds">
+        <transform translate="0 0 0">
+          <Shape>
+            <IndexedTriangleStripSet ccw='true' colorPerVertex='false' index='0 1 2 3 4 5 0' normalPerVertex='true'
+              solid='false' containerField='geometry'>
+              <Coordinate point='0.5 6 0 2 6 3 5 6 5 6 6 7 1 6 12 -1 6 3'> </Coordinate>
+              <Color color="0 0 1"> </Color>
+            </IndexedTriangleStripSet>
+          </Shape>
+        </transform>
+        <transform translate="0 0 0">
+          <Shape>
+            <IndexedTriangleStripSet ccw='true' colorPerVertex='false' index='0 1 2 3 4 5 0' normalPerVertex='true'
+              solid='false' containerField='geometry'>
+              <Coordinate point='-3 5 -1  -2 5 -3  -5 5 5  1 5 2  0 5 2  -1 5 3'> </Coordinate>
+              <Color color="0 0 1"> </Color>
+            </IndexedTriangleStripSet>
+          </Shape>
+        </transform>
+
+      </Group>
+
+
+      <!-- pyramid2 -->
+      <Transform translation='-2'>
+        <Shape>
+          <Appearance>
+            <Material USE="sand_texture"> </Material>
+          </Appearance>
+          <Extrusion crossSection='-1 0 0 2 1 0 -1 0' solid='false'></Extrusion>
+        </Shape>
+      </Transform>
+
+      <!--pyramid-->
+      <transform translation='0 .5 0'>
+        <shape>
+          <appearance>
+            <imagetexture USE='sand_texture'></imagetexture>
+            <material USE='sand_color'></material>
+          </appearance>
+          <pyramid></pyramid>
+        </shape>
+      </transform>
+
+      <!--UFO-->
+      <transform translation="0 3 0">
+        <TouchSensor DEF='TOUCH' description='touch to activate'></TouchSensor>
+        <!--UFO-->
+        <Group>
+          <!-- ship -->
+          <transform translation="0 0 0">
+            <Inline url="ufo.x3d"> </Inline>
+          </transform>
+          <!--lazer-->
+          <transform translation="-0.3 -1.5 -0.2">
+            <shape>
+              <appearance>
+                <PixelTexture image="3 2 3 
+			0xFF0000 0x00FF00 0x0000FF 
+			0xFFFF00 0xFF00FF 0x00FFFF"> </PixelTexture>
+              </appearance>
+              <snout height="3"></snout>
+            </shape>
+          </transform>
+          <!-- light -->
+          <transform translation="0 1 0" rotation="1 0 0 -1.5">
+            <SpotLight DEF="LIGHT" beamWidth='0.9' intensity='0.9' shadowIntensity='0.9' color='0 1 0' location='0 0 0'
+              radius='50.0000'>
+            </SpotLight>
+          </transform>
+        </Group>
+
+      </transform>
+
+      <!-- text -->
+      <transform translation="-10 3 -7">
+        <Anchor url='"./ufo.x3d"'>
+          <shape isPickable='true'>
+            <Text string='"Неопознанный" - "Летающий" - "Объект"' solid='false'>
+              <FontStyle family="MONOSPACE" size='1' spacing='1' language='ru'></FontStyle>
+            </Text>
+            <Appearance>
+              <Material diffuseColor='0 0.7 0'></Material>
+            </Appearance>
+          </shape>
+        </Anchor>
+      </transform>
+
+      <TimeSensor DEF='TIME' cycleInterval='5'> </TimeSensor>
+      <ROUTE fromNode='TOUCH' fromField='touchTime' toNode='TIME' toField='startTime'> </ROUTE>
+      <ROUTE fromNode='SPHERE_SENSOR' fromField='rotation_changed' toNode='MOON' toField='set_rotation'> </ROUTE>
+      <ROUTE fromNode='TIME' fromField='fraction_changed' toNode='COLOR_INTERPOLATOR' toField='set_fraction'></ROUTE>
+      <ROUTE fromNode='TIME' fromField='fraction_changed' toNode='SCALAR_INTERPOLATOR' toField='set_fraction'></ROUTE>
+      <ROUTE fromField='value_changed' fromNode='SCALAR_INTERPOLATOR' toField='intensity' toNode='LIGHT'> </ROUTE>
+      <ROUTE fromNode='COLOR_INTERPOLATOR' fromField='value_changed' toNode='LIGHT' toField='color'></ROUTE>
+    </scene>
+  </x3d>
+
+  <button id="bottom-sight-btn"> Вид снизу </button>
+  <button id="main-sight-btn"> Основной вид </button>
+
+  <script>
+    function focusDownSight() {
+      document.querySelector('#down').setAttribute('set_bind', true)
+    }
+    function focusGeneralSight() {
+      document.querySelector('#general').setAttribute('set_bind', true)
+    }
+    const bottomSightBtn = document.querySelector("#bottom-sight-btn");
+    const generalSightBtn = document.querySelector("#main-sight-btn");
+    bottomSightBtn.addEventListener("click", focusDownSight);
+    generalSightBtn.addEventListener("click", focusGeneralSight);
+  </script>
+</body>
+
+</html>
