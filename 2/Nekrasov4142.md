@@ -39,5 +39,6 @@ title-page: ./t.pdf
 
 ## Код сцены
 
-```html
-```
+### index.html
+
+\verbatiminput{./index.html}
